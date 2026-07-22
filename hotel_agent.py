@@ -12,6 +12,8 @@ import hashlib
 import datetime
 import time
 import inspect
+from dotenv import load_dotenv
+
 from aws_sdk_bedrock_runtime.client import (
     BedrockRuntimeClient,
     InvokeModelWithBidirectionalStreamOperationInput,
@@ -24,6 +26,9 @@ from aws_sdk_bedrock_runtime.config import Config
 from smithy_aws_core.identity.environment import EnvironmentCredentialsResolver
 from decimal import Decimal
 from boto3.dynamodb.conditions import Attr
+
+# Load environment variables from .env if present
+load_dotenv()
 
 # Suppress warnings
 warnings.filterwarnings("ignore")
@@ -1251,10 +1256,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Nova Sonic Python Streaming")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode")
     args = parser.parse_args()
-    # Set your AWS credentials here or use environment variables
-    os.environ["AWS_ACCESS_KEY_ID"] = ""
-    os.environ["AWS_SECRET_ACCESS_KEY"] = ""
-    os.environ["AWS_DEFAULT_REGION"] = ""
+    # AWS credentials can be provided through a local .env file, exported
+    # environment variables, or the normal AWS credential chain.
 
     # Run the main function
     try:
